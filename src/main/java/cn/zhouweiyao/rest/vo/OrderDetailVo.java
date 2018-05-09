@@ -20,12 +20,15 @@ public class OrderDetailVo {
 	private Integer msg;
 	private BigDecimal order_price;
 	private String order_time;
+	private Byte order_status;
+	
 	public String getOrder_time() {
 		return order_time;
 	}
 	public void setOrder_time(String order_time) {
 		this.order_time = order_time;
 	}
+	
 	private List<FoodVo> order_detail;
 	public Integer getMsg() {
 		return msg;
@@ -53,5 +56,11 @@ public class OrderDetailVo {
 	}
 	public OrderDetailVo() {
 		super();
+	}
+	public Byte getOrder_status() {
+		return order_status;
+	}
+	public void setOrder_status(Byte order_status) {
+		this.order_status = order_status;
 	}
 }

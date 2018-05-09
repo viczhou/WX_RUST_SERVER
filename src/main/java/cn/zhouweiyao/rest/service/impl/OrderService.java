@@ -129,6 +129,9 @@ public class OrderService implements IOrderService{
 		vo.setOrder_time(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(order.getOrderTime()));
 		vo.setOrder_price(order.getOrderPrice());
 		
+		vo.setMsg(0);
+		vo.setOrder_status(order.getOrderStatus());
+		
 		List<FoodVo> foods = new ArrayList<>();
 		for (OrderDetail od : orders) {
 			
