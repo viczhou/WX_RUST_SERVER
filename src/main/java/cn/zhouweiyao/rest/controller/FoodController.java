@@ -28,47 +28,52 @@ public class FoodController {
 
 	@Autowired
 	private IShopFoodService shopFoodService;
-	
+
 	private static final String TMP_FILE = "/static/tmp";
 	private static final String FOOD_FILE = "/static/food";
-//	'menu_id':xxxxx ,
-//    'food_img':xxxxx,
-//    'food_name':xxxxx,
-//    'food_price':xxxxxxx
+
+	// 'menu_id':xxxxx ,
+	// 'food_img':xxxxx,
+	// 'food_name':xxxxx,
+	// 'food_price':xxxxxxx
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
-	public AddFoodVo addFood(Integer menu_id, String food_img, String food_price, HttpServletRequest request) {
-		
-		ShopFood shopFood = shopFoodService.saveShopFood(menu_id, food_img, food_price);
-		
+	public AddFoodVo addFood(Integer menu_id, String food_name, String food_img, String food_price,
+			HttpServletRequest request) {
+
+		ShopFood shopFood = shopFoodService.saveShopFood(menu_id, food_name, food_img, food_price);
+
 		try {
 			String copyImage = copyImage(shopFood.getFoodImg(), shopFood.getId(), request);
+
 			if (StringUtils.isNotBlank(copyImage)) {
-				
+
 				shopFood.setFoodImg(copyImage);
 				shopFoodService.updateShopFood(shopFood);
-				
+
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		return new AddFoodVo(0, shopFood.getId());
 	}
-//	   'food_id':xxxxx ,
-//	    'food_name':xxxxx ,
-//	    'food_price':xxxxx,
-//	    'food_img':xxx 
+
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	@ResponseBody
-	public Msg updateFood (Integer food_id, String food_name, BigDecimal food_price, String food_img, HttpServletRequest request) {
-		
+	public Msg updateFood(Integer menu_id, Integer food_id, String food_name, BigDecimal food_price, String food_img,
+			HttpServletRequest request) {
+
 		ShopFood shopFood = this.shopFoodService.getShopFoodById(food_id);
 		if (shopFood == null) {
 			return new Msg(1);
 		}
 		shopFood.setFoodName(food_name);
+		
+		shopFood.setMenuId(menu_id);
+		
 		shopFood.setFoodPrice(food_price);
+
 		try {
 			String copyImage = copyImage(food_img, shopFood.getId(), request);
 			shopFood.setFoodImg(copyImage);
@@ -77,14 +82,16 @@ public class FoodController {
 		}
 		this.shopFoodService.updateShopFood(shopFood);
 		return new Msg(0);
-		
+
 	}
+
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	@ResponseBody
 	public Msg deleteFood(Integer food_id) {
 		this.shopFoodService.deleteShopFoodById(food_id);
 		return new Msg(0);
 	}
+
 	/**
 	 * 复制图片
 	 * 
@@ -118,14 +125,15 @@ public class FoodController {
 		fis.close();
 		return targetParentPath + File.separator + shopImageFile;
 	}
+
 	@RequestMapping(value = "/getFood", method = RequestMethod.POST)
 	@ResponseBody
 	public ApiResult getFood(Integer menu_id) {
-		
+
 		ApiResult result = new ApiResult();
 		List<ShopFood> food = this.shopFoodService.getShopFoodByMenuId(menu_id);
 		result.setData(food);
 		return result;
 	}
-	
+
 }

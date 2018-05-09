@@ -16,9 +16,10 @@ public class ShopFoodService implements IShopFoodService{
 	@Autowired
 	private ShopFoodMapper shopFoodMapper;
 	@Override
-	public ShopFood saveShopFood(Integer menu_id, String food_img, String food_price) {
+	public ShopFood saveShopFood(Integer menu_id,String food_name , String food_img, String food_price) {
 		
 		ShopFood food = new ShopFood();
+		food.setFoodName(food_name);
 		food.setFoodImg(food_img);
 		food.setMenuId(menu_id);
 		food.setFoodPrice(new BigDecimal(food_price));
