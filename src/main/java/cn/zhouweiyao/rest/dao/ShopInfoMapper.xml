@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.zhouweiyao.rest.dao.ShopInfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.zhouweiyao.rest.pojo.ShopInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
+    <result column="shop_img" property="shopImg" jdbcType="VARCHAR" />
+    <result column="shop_address" property="shopAddress" jdbcType="VARCHAR" />
+    <result column="shop_phone" property="shopPhone" jdbcType="VARCHAR" />
+    <result column="shop_latitude" property="shopLatitude" jdbcType="VARCHAR" />
+    <result column="shop_longitude" property="shopLongitude" jdbcType="VARCHAR" />
+    <result column="shop_licence" property="shopLicence" jdbcType="VARCHAR" />
+    <result column="resp_name" property="respName" jdbcType="VARCHAR" />
+    <result column="resp_phone" property="respPhone" jdbcType="VARCHAR" />
+    <result column="shop_status" property="shopStatus" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_id, shop_name, shop_img, shop_address, shop_phone, shop_latitude, shop_longitude, 
+    shop_licence, resp_name, resp_phone, shop_status
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.zhouweiyao.rest.pojo.ShopInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from shop_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from shop_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from shop_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.zhouweiyao.rest.pojo.ShopInfoExample" >
+    delete from shop_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id"  parameterType="cn.zhouweiyao.rest.pojo.ShopInfo" >
+    insert into shop_info (id, user_id, shop_name, 
+      shop_img, shop_address, shop_phone, 
+      shop_latitude, shop_longitude, shop_licence, 
+      resp_name, resp_phone, shop_status
+      )
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{shopName,jdbcType=VARCHAR}, 
+      #{shopImg,jdbcType=VARCHAR}, #{shopAddress,jdbcType=VARCHAR}, #{shopPhone,jdbcType=VARCHAR}, 
+      #{shopLatitude,jdbcType=VARCHAR}, #{shopLongitude,jdbcType=VARCHAR}, #{shopLicence,jdbcType=VARCHAR}, 
+      #{respName,jdbcType=VARCHAR}, #{respPhone,jdbcType=VARCHAR}, #{shopStatus,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.zhouweiyao.rest.pojo.ShopInfo" >
+    insert into shop_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="shopName != null" >
+        shop_name,
+      </if>
+      <if test="shopImg != null" >
+        shop_img,
+      </if>
+      <if test="shopAddress != null" >
+        shop_address,
+      </if>
+      <if test="shopPhone != null" >
+        shop_phone,
+      </if>
+      <if test="shopLatitude != null" >
+        shop_latitude,
+      </if>
+      <if test="shopLongitude != null" >
+        shop_longitude,
+      </if>
+      <if test="shopLicence != null" >
+        shop_licence,
+      </if>
+      <if test="respName != null" >
+        resp_name,
+      </if>
+      <if test="respPhone != null" >
+        resp_phone,
+      </if>
+      <if test="shopStatus != null" >
+        shop_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopImg != null" >
+        #{shopImg,jdbcType=VARCHAR},
+      </if>
+      <if test="shopAddress != null" >
+        #{shopAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPhone != null" >
+        #{shopPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shopLatitude != null" >
+        #{shopLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="shopLongitude != null" >
+        #{shopLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="shopLicence != null" >
+        #{shopLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="respName != null" >
+        #{respName,jdbcType=VARCHAR},
+      </if>
+      <if test="respPhone != null" >
+        #{respPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shopStatus != null" >
+        #{shopStatus,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.zhouweiyao.rest.pojo.ShopInfoExample" resultType="java.lang.Integer" >
+    select count(*) from shop_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update shop_info
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopName != null" >
+        shop_name = #{record.shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopImg != null" >
+        shop_img = #{record.shopImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopAddress != null" >
+        shop_address = #{record.shopAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopPhone != null" >
+        shop_phone = #{record.shopPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopLatitude != null" >
+        shop_latitude = #{record.shopLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopLongitude != null" >
+        shop_longitude = #{record.shopLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopLicence != null" >
+        shop_licence = #{record.shopLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="record.respName != null" >
+        resp_name = #{record.respName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.respPhone != null" >
+        resp_phone = #{record.respPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopStatus != null" >
+        shop_status = #{record.shopStatus,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update shop_info
+    set id = #{record.id,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      shop_name = #{record.shopName,jdbcType=VARCHAR},
+      shop_img = #{record.shopImg,jdbcType=VARCHAR},
+      shop_address = #{record.shopAddress,jdbcType=VARCHAR},
+      shop_phone = #{record.shopPhone,jdbcType=VARCHAR},
+      shop_latitude = #{record.shopLatitude,jdbcType=VARCHAR},
+      shop_longitude = #{record.shopLongitude,jdbcType=VARCHAR},
+      shop_licence = #{record.shopLicence,jdbcType=VARCHAR},
+      resp_name = #{record.respName,jdbcType=VARCHAR},
+      resp_phone = #{record.respPhone,jdbcType=VARCHAR},
+      shop_status = #{record.shopStatus,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.zhouweiyao.rest.pojo.ShopInfo" >
+    update shop_info
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="shopName != null" >
+        shop_name = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopImg != null" >
+        shop_img = #{shopImg,jdbcType=VARCHAR},
+      </if>
+      <if test="shopAddress != null" >
+        shop_address = #{shopAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPhone != null" >
+        shop_phone = #{shopPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shopLatitude != null" >
+        shop_latitude = #{shopLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="shopLongitude != null" >
+        shop_longitude = #{shopLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="shopLicence != null" >
+        shop_licence = #{shopLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="respName != null" >
+        resp_name = #{respName,jdbcType=VARCHAR},
+      </if>
+      <if test="respPhone != null" >
+        resp_phone = #{respPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shopStatus != null" >
+        shop_status = #{shopStatus,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.zhouweiyao.rest.pojo.ShopInfo" >
+    update shop_info
+    set user_id = #{userId,jdbcType=INTEGER},
+      shop_name = #{shopName,jdbcType=VARCHAR},
+      shop_img = #{shopImg,jdbcType=VARCHAR},
+      shop_address = #{shopAddress,jdbcType=VARCHAR},
+      shop_phone = #{shopPhone,jdbcType=VARCHAR},
+      shop_latitude = #{shopLatitude,jdbcType=VARCHAR},
+      shop_longitude = #{shopLongitude,jdbcType=VARCHAR},
+      shop_licence = #{shopLicence,jdbcType=VARCHAR},
+      resp_name = #{respName,jdbcType=VARCHAR},
+      resp_phone = #{respPhone,jdbcType=VARCHAR},
+      shop_status = #{shopStatus,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
